@@ -20,6 +20,8 @@ from .providers.record import RecordingProvider
 PKG = Path(__file__).resolve().parent
 LIVE_DIR = PKG / "recordings"
 SYNTHETIC_DIR = PKG / "tests" / "fixtures" / "synthetic" / "recordings"
+# Tables built from the hand-written plumbing responses never go to results/ (amendment A13).
+SYNTHETIC_RESULTS_DIR = PKG / "tests" / "fixtures" / "synthetic" / "results"
 SYNTHETIC_MODEL = "synthetic-plumbing"
 EXPERIMENTS = [e1_done, e2_vacuous, e3_oracle, e4_gates]
 
@@ -142,6 +144,7 @@ def run_offline(seeds: list[int] | None = None, rebuild_synthetic: bool = False,
         set_name, set_dir = "synthetic", SYNTHETIC_DIR
         slots = [Slot(MockProvider(SYNTHETIC_DIR), "synthetic", SYNTHETIC_MODEL)]
         r_ind_for = lambda s: s  # noqa: E731
+        out_dir = out_dir or SYNTHETIC_RESULTS_DIR
     log(f"replaying the {set_name} recording set ...")
     try:
         ctxs, incomplete = collect_all(slots, seeds, r_ind_for, measure=True)

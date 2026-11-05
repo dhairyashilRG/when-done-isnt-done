@@ -25,13 +25,13 @@ The write-up that explains where these claims came from and what the results mea
 |---|---|---|
 | E1: "done" overstates what works | does not reproduce | the agent claimed 23–28 of 32 rules done; the hidden tests confirmed 29–32 |
 | E1: pass rate vs mutation score | does not reproduce | every agent test suite passed 100%, so pass rate predicts nothing |
-| E1: mutation score misses absent rules | reproduces (2 cases) | modules missing a whole rule still scored 79% and 85% |
-| E1c: claimed fixes vs real fixes | descriptive | 13 claimed, 2 landed; all 11 misses are one arguably unclear rule |
-| E2: checks pass on nothing | does not reproduce | 46% did at first; one written rule brought later checks to 0% |
-| E3: same-agent version shares mistakes | partial | same-conversation version agreed with the implementation every time; independent one never did |
-| E4: code-enforced stops beat written ones | does not reproduce | the agent asked about written-only decisions 80% of the time, code-enforced ones 40% |
+| E1: mutation score with a whole rule failing | reproduces (2 cases, thin) | modules failing every hidden test of one rule still scored 79% and 85%; in both the rule was the owner-gated C18 |
+| E1c: claimed fixes vs real fixes | descriptive | 18 comments (12 distinct), 13 claimed, 2 landed; every miss is one arguably unclear rule |
+| E2: checks pass on nothing | does not reproduce | 46% did at first; one written rule brought later checks to 0% (that step also saw rule-following examples) |
+| E3: same-agent version shares mistakes | partial | same-conversation version agreed with the implementation every time; independent one never did (in one run because it crashed) |
+| E4: code-enforced stops beat written ones | does not reproduce | the agent stopped and asked at 90% of written-only decisions, and asked about the code-enforced one in 20% of runs |
 
-Full numbers, caveats and the original-vs-corrected table after the audit are in
+Full numbers, caveats and the before/after tables for both audits are in
 `repro/results/summary.md`.
 
 ## A second model: `claude-haiku-5-5` (5 runs, $0.62)
@@ -45,13 +45,13 @@ descriptive, not a test.
 | Claim | Sonnet | Haiku |
 |---|---|---|
 | E1: "done" overstates what works | does not reproduce (median gap −6) | **partial** (median gap +4: claimed 26–30 rules done, 24–30 passed) |
-| E1: mutation score misses absent rules | reproduces (2 modules) | reproduces (11 modules, median score 73%) |
-| E1c: claimed fixes vs real fixes | 13 claimed, 2 landed | 15 claimed, 0 landed |
+| E1: mutation score with a whole rule failing | reproduces (2 modules) | reproduces (11 modules, median score 73%) |
+| E1c: claimed fixes vs real fixes | 13 claimed, 2 landed (of 18) | 15 claimed, 0 landed (of 34) |
 | E2: checks pass on nothing | 46% at first, 0% later with the rule | 72% at first, 2% later with the rule |
-| E3: same-conversation version agrees | always | always |
-| E4: asked about written vs code-enforced decisions | 80% vs 40% | 70% vs 20% |
+| E3: same-agent version shares mistakes | partial (same-conversation version always agreed) | **does not reproduce** (always agreed, but the independent version shared the planted shelf-life mistake in all 5 runs too) |
+| E4: stopped at written-only vs asked about code-enforced decisions | 90% vs 20% | 80% vs 0% |
 
-Haiku's over-claims were on supplier rules, where its module demanded a warehouse that the
+Haiku's over-claims were mostly on supplier rules, where its module demanded a warehouse that the
 spec's call signatures do not take (partly a loose point in the spec), and on lot expiry and
 shipping order. Its own tests passed on every rule in every run. Full
 numbers: `repro/results_by_model/anthropic_haiku_x4/summary.md`.
@@ -62,8 +62,10 @@ numbers: `repro/results_by_model/anthropic_haiku_x4/summary.md`.
 under a $12 cap approved by the owner. The responses are saved in `repro/recordings/`, so
 `make repro` recomputes every table from them offline. An independent audit then fixed two scoring
 bugs (amendments A6–A8 in `repro/results/PREREGISTRATION.md`); A9 makes one verdict label follow the
-pre-registered wording, and A10 renames a product in one hidden test. None of them is a new recording. `repro/results/summary.md` shows the
-original and the corrected numbers side by side. The hand-written test answers (marked `SYNTHETIC`)
+pre-registered wording, and A10 renames a product in one hidden test. After release v1.0.0 a second
+audit found two more scoring bugs, both in E4 (amendment A13); no verdict changed, but E4's numbers
+did. None of these is a new recording. `repro/results/summary.md` shows the numbers before and after
+each audit side by side. The hand-written test answers (marked `SYNTHETIC`)
 are still used by the plumbing tests only.
 
 ## Running it offline (no model, no network)

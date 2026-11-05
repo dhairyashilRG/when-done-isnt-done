@@ -13,6 +13,10 @@ import json
 import sys
 
 
+class _SetupError(Exception):
+    """The probe could not set up the gated behaviour; the gate is unclassified, not open."""
+
+
 def main():
     heldout_dir, out_path = sys.argv[1], sys.argv[2]
     sys.path.insert(0, heldout_dir)
@@ -66,15 +70,32 @@ def main():
     if pen and pen[0][1].default is inspect.Parameter.empty:
         out["G2"] = {"param": pname, "open": True, "value": None}
     else:
-        try:
+        def late_payment(wh):
+            """Cash paid for one late delivery of an order placed with (wh given) or without a warehouse."""
             d = build("G2")
             d.add_item("GLUE", 240, 5, shelf_life_days=7)
-            o = d.place_order("S1", "GLUE", 5, 0)
+            try:
+                o = d.place_order("S1", "GLUE", 5, 0, *((wh,) if wh else ()))
+            except (TypeError, E) as exc:
+                if wh is None:
+                    return None  # the spec's call was refused; try again with a warehouse
+                raise _SetupError(f"place_order: {type(exc).__name__}: {exc}") from exc
             c0 = A.cash(d)
             d.deliver(o, 5)
-            paid = c0 - A.cash(d)
-            pct = round(100 * (1200 - paid) / 1200, 3)
-            out["G2"] = {"param": pname, "open": False, "value": f"{pct}%" if paid else "no payment"}
+            return c0 - A.cash(d)
+
+        try:
+            # Amendment A13: the gate is about paying at delivery, not about placing the order. The probe
+            # first uses the spec's call. If that call is refused, or the late delivery moves no cash (some
+            # implementations pay only for an order with a warehouse), it repeats the scenario with
+            # warehouse "A". A late delivery that still moves no cash cannot show whether a penalty was
+            # chosen, so the gate is unclassified, not decided.
+            paid = late_payment(None)
+            if not paid:
+                paid = late_payment("A")
+            pct = round(100 * (1200 - paid) / 1200, 3) if paid else None
+            out["G2"] = ({"param": pname, "open": False, "value": f"{pct}%"} if paid else
+                         {"param": pname, "open": None, "value": "no payment"})
         except (E, NotImplementedError) as exc:
             out["G2"] = {"param": pname, "open": True, "value": None, "raised": type(exc).__name__,
                          "code": A.code_of(exc)}

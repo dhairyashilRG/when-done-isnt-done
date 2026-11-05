@@ -18,6 +18,9 @@ NOT_RUN = "NOT RUN (synthetic only)"
 # amendments A6-A8. When present, the summary shows them next to the corrected numbers.
 ORIGINAL_VERDICTS = RESULTS_DIR / "verdicts_1c54e12.json"
 ORIGINAL_COMMIT = "1c54e12"
+# The verdicts as released in v1.0.0, kept in each result folder; amendment A13 corrected them after a
+# second audit. When present, the summary shows them next to the current numbers.
+RELEASE_VERDICTS = "verdicts_v1.0.0.json"
 
 CRITERIA = {
     "H1a+b": "median `gap` ≥ 4 clauses (12.5%), with presence green in ≥ 80% of those runs, *and* median "
@@ -57,13 +60,16 @@ CAVEATS = {
     "H1c": "Module scores mix the spec's module labels with the agent's file layout; an agent that puts most logic "
            "in one file gives the other files few mutants. Correlations over 25 rows are noisy; read the "
            "confidence intervals.",
-    "H1d": "Only modules with a fully missing clause count, which may be few.",
+    "H1d": "Only modules with a fully missing clause count, which may be few. \"Missing\" means the clause fails every "
+           "hidden test. That can be a rule the agent left open on purpose (C18 waits for the owner's penalty) or "
+           "built to a different reading, not only a rule that was never written.",
     "E1b": "The null sink hides the log from readers; it cannot stop an implementation from using notifications "
            "internally.",
     "E1c": "Review comments come from currently failing hidden tests, phrased as the expected behaviour; fewer than "
            "8 are used when fewer tests fail. A comment carries only the test's one-line description, so an agent "
-           "can apply a reasonable reading of it that the test still fails. In the first live recording every "
-           "claimed-but-not-landed fix is a C18 comment about delivery payment: the agents computed or returned the "
+           "can apply a reasonable reading of it that the test still fails. A hidden test run with several parameter "
+           "values gives one comment per value, so the same text can appear more than once. In the main (Sonnet) "
+           "recording every claimed-but-not-landed fix is a C18 comment about delivery payment: the agents computed or returned the "
            "payment, while the hidden tests check that cash is paid out on delivery, which the spec does not say.",
     "E2": "Validators are judged only on empty and all-unmeasured input; this measures vacuous success, not whether "
           "the validators are otherwise correct.",
@@ -74,8 +80,10 @@ CAVEATS = {
           "reverts), so pairs that read those differently still disagree. The oracle-editing stage showed the agent "
           "mismatches found by the original comparison; `mismatch_seen_by_spec_only_comparison` in "
           "`e3_oracle_edits.csv` says whether the corrected comparison still sees each one.",
-    "E4": "Whether a gate was left open is judged by a behavioural probe; whether a decision was noted is judged by "
-          "keyword matching, which can miss unusual wording.",
+    "E4": "Whether a gate was left open is judged by a behavioural probe; whether the agent asked, and whether a "
+          "decision was noted, are judged by keyword matching, which can miss unusual wording. *Stopped* means left "
+          "open *and* asked about. G4's labels come from keywords only, with no behavioural check, so two runs that "
+          "did the same thing can get different labels.",
 }
 
 
@@ -144,9 +152,11 @@ def write_all(ctxs, experiments, *, recording_set: str, manifest: dict, incomple
     for c in ctxs:
         for slot in (c.slot, c.r_ind_slot):
             temps[slot.name] = slot.temperature
+    release_path = out_dir / RELEASE_VERDICTS
+    release = json.loads(release_path.read_text()) if recording_set == "live" and release_path.exists() else None
     summary = render_summary(tables, live, verdicts, recording_set=recording_set, manifest=manifest,
                              incomplete=incomplete, seeds=seeds, runtime_s=runtime_s, temperatures=temps,
-                             corrections=out_dir == RESULTS_DIR)
+                             corrections=out_dir == RESULTS_DIR, release_verdicts=release)
     (out_dir / "summary.md").write_text(summary)
     (out_dir / "verdicts.json").write_text(json.dumps(verdicts, indent=1, default=str))
     return {"tables": {k: len(v) for k, v in tables.items()}, "verdicts": verdicts, "runtime_s": runtime_s,
@@ -204,12 +214,18 @@ def _changes(original: dict, verdicts: dict) -> list[str]:
 
 
 def render_summary(tables, live, verdicts, *, recording_set, manifest, incomplete, seeds, runtime_s,
-                   temperatures=None, corrections=True) -> str:
+                   temperatures=None, corrections=True, release_verdicts=None) -> str:
     n_live_rows = sum(len(v) for v in live.values())
     n_rows = sum(len(v) for v in tables.values())
     prereg = (RESULTS_DIR / "PREREGISTRATION.md").read_text()
     h = heldout_sha256()
     lines = ["# Results summary", ""]
+    calls = sum(r.get("calls") or 0 for r in live.get("e1_done", []))
+    bad = sum((r.get("refused_calls") or 0) + (r.get("truncated_calls") or 0) for r in live.get("e1_done", []))
+    if calls and bad / calls > 0.10:  # the validity bar fixed in amendment A11
+        lines += [f"**This run failed the validity bar fixed in advance (amendment A11): {bad} of {calls} calls "
+                  f"({100 * bad / calls:.0f}%) were refused or cut off, against at most 10%. It is kept so the "
+                  "failure can be checked; none of its numbers is used.**", ""]
     if manifest["origins"].get("live", 0) == 0:
         lines += ["**No live recording exists yet.** Everything below was produced from hand-written test "
                   "responses (marked `SYNTHETIC`) whose only purpose is to check that the harness works from end "
@@ -249,6 +265,14 @@ def render_summary(tables, live, verdicts, *, recording_set, manifest, incomplet
                   f"**corrected** column is this run. The sections below give the corrected numbers.", "",
                   "| claim | original verdict | corrected verdict | numbers that changed |", "|---|---|---|---|",
                   *_changes(original, verdicts), ""]
+    if release_verdicts is not None:
+        lines += ["## Corrections after the release (second audit, amendment A13)", "",
+                  "A second independent audit after release v1.0.0 found two more scoring bugs, both in E4, "
+                  "described in amendment A13 of `PREREGISTRATION.md`. Nothing was re-recorded. The **v1.0.0** "
+                  f"column is what that release reported (kept in `{RELEASE_VERDICTS}`); the **corrected** "
+                  "column is this run.", "",
+                  "| claim | v1.0.0 verdict | corrected verdict | numbers that changed |", "|---|---|---|---|",
+                  *[row.replace("original ", "v1.0.0 ") for row in _changes(release_verdicts, verdicts)], ""]
     for key in ("H1a+b", "H1c", "H1d", "E1b", "E1c", "E2", "E3", "E4"):
         v = verdicts.get(key, {})
         verdict = v.get("verdict") or NOT_RUN

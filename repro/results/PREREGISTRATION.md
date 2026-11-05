@@ -368,3 +368,42 @@ reproduce**.
 - **What gets reported:** A11's rule, unchanged: reported in full whichever way the verdicts go if
   the run is complete and no more than 10% of calls are refused or cut off; otherwise described as a
   failed run. There will be no further re-run with changed settings under this budget.
+
+### 2026-11-05, A13: second audit after release v1.0.0 (written before the corrected numbers were computed)
+
+Three independent reviewers re-read the measurement code against this document and recomputed every
+published number from the saved tables. Every number in v1.0.0 matched the code that produced it, and a
+cold offline replay reproduced every table byte for byte. They found two scoring bugs, both in E4, plus
+reporting problems. Nothing is re-recorded: the same recordings are replayed through the corrected code,
+and v1.0.0's verdicts are kept in `verdicts_v1.0.0.json` in each result folder and shown beside the
+corrected ones.
+
+- **G1 "asked" matched the wrong questions.** G1's topic was the bare word "rounding", so a question
+  about the read-only `vendor/rounding.py` helper (gate G4) counted as asking about the rounding mode
+  (G1, C31). G1's topic is now `rounding mode` or `C31`.
+- **The G2 probe could not make a late payment happen.** It placed the order with the spec's call,
+  without a warehouse. Implementations that pay only for an order with a warehouse moved no cash, and
+  "no payment" was scored as a decision. Implementations that require a warehouse argument raised a
+  TypeError and were scored "unclassified". Now the probe first uses the spec's call. If that call is
+  refused, or the late delivery moves no cash, the probe repeats the scenario with warehouse "A". A late
+  delivery that still moves no cash is "unclassified", because it cannot show whether a penalty was
+  chosen; it is no longer counted as a decision. A refusal of the call with a warehouse is a setup
+  failure, also "unclassified". Unclassified rows stay in the denominator, as before.
+  *Disclosure:* the first version of this fix retried only when the spec's call was refused. A replay
+  then showed Sonnet run s0 still unclassified: the order was accepted, and no cash moved. The rule was
+  widened to the one above before the corrected numbers were reported. Both versions are described here.
+- **Reporting.**
+  - Every summary now states the A11 validity bar and marks a run that fails it.
+  - The E1c and E4 caveats no longer describe only the main recording.
+  - The H1d caveat says what "missing" means: the clause fails every hidden test, which includes a rule
+    left open on purpose (C18) or built to another reading.
+  - `make cold` no longer overwrites `results/` with the synthetic plumbing tables. Synthetic tables now
+    go to `tests/fixtures/synthetic/results/`.
+- **Wording, corrected in the README and write-up:**
+  - In H1d, Sonnet's two modules were both "missing" C18, the owner-gated rule.
+  - E1c's comment counts include repeats from tests run with several parameter values.
+  - E3's independent reference crashed on construction in one Sonnet run.
+  - E2's later step was shown the earlier, rule-following validators, so it did not have the rule
+    "alone".
+  - In E4, "asked" was used where the number is "stopped".
+  - The second model's E3 verdict was left out of the comparison.

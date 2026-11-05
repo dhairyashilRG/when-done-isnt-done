@@ -2,7 +2,11 @@
 from repro import report
 from repro.orchestrate import LIVE_DIR, PKG, config, is_anthropic, model_set
 from repro.providers.base import load_price_table
-from repro.providers.mock import manifest
+from repro.providers.mock import load_recordings, manifest
+
+
+def config_model(name):
+    return load_price_table()[name]["model"]
 
 
 def test_configured_implementers_use_the_main_folders():
@@ -18,8 +22,24 @@ def test_another_provider_gets_its_own_folders():
 
 
 def test_main_replay_ignores_other_providers_recordings():
-    # The main set reads recordings/*.json only, so a subfolder for another model is not part of it.
-    assert LIVE_DIR / "anthropic_haiku" not in set(LIVE_DIR.glob("*.json"))
+    # The main set reads recordings/*.json only, so another model's recordings in a subfolder are not part of it.
+    main = load_recordings(LIVE_DIR)
+    assert main and all(r["provenance"]["model"] == config_model("anthropic") for r in main.values())
+    other = load_recordings(LIVE_DIR / "anthropic_haiku_x4")
+    assert other and not set(other) & set(main)
+
+
+def test_synthetic_tables_never_go_to_results(monkeypatch, tmp_path):
+    # Amendment A13: `make cold` (rebuild_synthetic) once overwrote results/ with the plumbing tables.
+    from repro import orchestrate
+    seen = {}
+    monkeypatch.setattr(orchestrate, "SYNTHETIC_RESULTS_DIR", tmp_path / "synthetic_results")
+    monkeypatch.setattr(orchestrate.report, "write_all", lambda *a, **k: seen.setdefault("out_dir", k["out_dir"]))
+    monkeypatch.setattr(orchestrate, "collect_all", lambda *a, **k: ([], False))
+    monkeypatch.setattr(orchestrate, "build_synthetic", lambda seeds: None)
+    monkeypatch.setattr(orchestrate, "manifest", lambda d: {})
+    orchestrate.run_offline([0], rebuild_synthetic=True)
+    assert seen["out_dir"] == tmp_path / "synthetic_results" != report.RESULTS_DIR
 
 
 def test_provider_kind():

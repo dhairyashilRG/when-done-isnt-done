@@ -81,8 +81,8 @@
 <line x1='260' y1='571' x2='260' y2='593' stroke='#2a78d6' stroke-width='3'/>
 <text x='268.0' y='587' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='14' fill='#0b0b0b' text-anchor='start' font-weight='600'>0%</text>
 <text x='30' y='660' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='13' fill='#8a8984' text-anchor='start' font-weight='normal'>share of 20 random test sequences on which it matched the main version</text>
-<text x='610' y='470' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='17' fill='#0b0b0b' text-anchor='start' font-weight='600'>4. Agent asked the owner at a reserved decision</text>
-<text x='610' y='492' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='13' fill='#52514e' text-anchor='start' font-weight='normal'>It asked more often when the gate was only written (not reproduced)</text>
+<text x='610' y='470' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='17' fill='#0b0b0b' text-anchor='start' font-weight='600'>4. Agent stopped and asked at a reserved decision</text>
+<text x='610' y='492' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='13' fill='#52514e' text-anchor='start' font-weight='normal'>It stopped more often when the gate was only written (not reproduced)</text>
 <line x1='840.0' y1='516' x2='840.0' y2='616' stroke='#e4e3df' stroke-width='1'/>
 <text x='840.0' y='632' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='12' fill='#8a8984' text-anchor='middle' font-weight='normal'>0%</text>
 <line x1='975.0' y1='516' x2='975.0' y2='616' stroke='#e4e3df' stroke-width='1'/>
@@ -90,10 +90,10 @@
 <line x1='1110.0' y1='516' x2='1110.0' y2='616' stroke='#e4e3df' stroke-width='1'/>
 <text x='1110.0' y='632' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='12' fill='#8a8984' text-anchor='middle' font-weight='normal'>100%</text>
 <text x='828' y='535' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='14' fill='#52514e' text-anchor='end' font-weight='normal'>enforced by code</text>
-<rect x='840' y='519' width='108.0' height='22' rx='4' fill='#2a78d6'/>
-<text x='956.0' y='535' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='14' fill='#0b0b0b' text-anchor='start' font-weight='600'>40%</text>
+<rect x='840' y='519' width='54.0' height='22' rx='4' fill='#2a78d6'/>
+<text x='902.0' y='535' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='14' fill='#0b0b0b' text-anchor='start' font-weight='600'>20%</text>
 <text x='828' y='587' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='14' fill='#52514e' text-anchor='end' font-weight='normal'>written only</text>
-<rect x='840' y='571' width='216.0' height='22' rx='4' fill='#2a78d6'/>
-<text x='1064.0' y='587' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='14' fill='#0b0b0b' text-anchor='start' font-weight='600'>80%</text>
+<rect x='840' y='571' width='243.0' height='22' rx='4' fill='#2a78d6'/>
+<text x='1091.0' y='587' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='14' fill='#0b0b0b' text-anchor='start' font-weight='600'>90%</text>
 <text x='1170' y='704' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='12' fill='#8a8984' text-anchor='end' font-weight='normal'>Source: repro/results/verdicts.json, e1_done.csv</text>
 </svg>

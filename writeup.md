@@ -19,7 +19,7 @@ This note reports four patterns we saw in a larger private system, where languag
 - **Planted problems.** Two rules contradict the data table on purpose. Three decisions are reserved for the "owner", who never answers. One read-only helper file contains a real bug.
 - **The agent under test.** Claude Sonnet 5.5 (`claude-sonnet-5-5`), run 5 times, with each run seeing the rules in a different order. In every run it writes the module, writes its tests, fixes failures (at most 2 rounds), writes a demonstration script, and reports which rules are done.
 - **Ground truth.** A hidden test suite of 138 tests, written before any agent output existed, and a hand-written correct version. Both were fixed by hash in the pre-registration.
-- **Cost and replay.** One live recording: 74 model calls, $5.02. Every response is saved with its origin and cost, so all results can be recomputed offline in seconds.
+- **Cost and replay.** One live recording: 74 model calls, $5.02. Every response is saved with its origin and cost, so all results can be recomputed offline: a few minutes from a clean copy, seconds once cached.
 - **A second model.** Claude Haiku 5.5 (`claude-haiku-5-5`) was added afterwards under its own dated amendments, with the same prompts, seeds, tests and verdict rules (§3.5).
 
 **One rule we added because of the private system.** There, some "review results" turned out to be hand-written stand-in responses, not real model judgements. In the reproduction, a hand-written response may be used to test the plumbing, but it can never feed a result.
@@ -40,13 +40,13 @@ What closed the gap was inverting the check: a walk-through fails if any promise
 In the same system, a mutation test (which plants small bugs and counts how many the tests catch) found one module whose tests all passed while scoring **0**. Those tests only read stored data and never exercised the module's logic, which was wrong.
 
 **Reproduction.** Mostly not reproduced.
-- **Over-claiming.** The agent did not over-claim. Across 5 runs it marked 23–28 of the 32 rules "done", while the hidden tests confirmed 29–32 actually worked. Where it was unsure, it said "partial". The pre-registered test (at least 4 rules over-claimed) **did not reproduce**: the median gap was −6, meaning the agent claimed less than it delivered.
+- **Over-claiming.** The agent did not over-claim. Across 5 runs it marked 23–28 of the 32 rules "done", while the hidden tests confirmed 29–32 actually worked. Where it was unsure, it said "partial". The pre-registered test (a net gap of at least 4 rules, claimed minus confirmed) **did not reproduce**: the median gap was −6, meaning the agent claimed less than it delivered. It did over-claim one rule in each of two runs, but under-claimed many more.
 - **Agent test pass rate.** It was 100% in all 25 module-runs, so it cannot predict anything. The pre-registered comparison with mutation score therefore **does not reproduce**. Mutation score itself correlated weakly and negatively with real correctness (−0.23, 95% interval −0.52 to 0.09).
-- **Mutation score can't see missing rules.** This **reproduced**, on a small sample. In the two modules where a whole rule was missing, the agent's tests still caught 79% and 85% of planted bugs.
-- **Control suites behaved as expected.** A test suite that only reads stored values passed 100% and caught **0%** of planted bugs, the same as the private 0-score case. A suite of tests that assert nothing also caught 0%. The hidden suite used as tests caught 83%.
-- **Claimed fixes.** Given 18 review comments in total, the agent said it had applied 13; only 2 actually took effect. All 11 misses concern one rule, where the spec is arguably unclear about whether cash should go down. So this is a weak signal, not a finding.
+- **Mutation score stays high when a whole rule fails.** This **reproduced** by the pre-registered rule, but thinly. In two modules every hidden test of one rule failed, yet the agent's tests still caught 79% and 85% of planted bugs. In both, the rule was the late-penalty rule reserved for the owner, which the agent left open on purpose. So this shows that mutation score is blind to behaviour the tests never check, not that the agent forgot a rule.
+- **Control suites behaved as expected.** A test suite that only reads stored values passed 100% and caught a median of **0%** of planted bugs, the same as the private 0-score case. A suite of tests that assert nothing also caught 0%. The hidden suite used as tests caught 83%.
+- **Claimed fixes.** Of 18 review comments (12 distinct), the agent said it applied 13; only 2 took effect. Every miss concerns one rule where the spec is arguably unclear about whether cash should go down, so this is a weak signal, not a finding.
 
-**Reading.** On a one-page spec that fits in a single prompt, this agent was cautious and mostly correct. The private gap appeared over weeks, in large code bases, with many rules that only matter on paths a script doesn't take. The reproduction did not create those conditions, so it neither confirms nor refutes the private observation for them. The parts about checks did hold: a passing test suite, and even a good mutation score, still say nothing about a rule that was never built.
+**Reading.** On a one-page spec that fits in a single prompt, this agent was cautious and mostly correct. The private gap appeared over weeks, in large code bases, with many rules that only matter on paths a script doesn't take. The reproduction did not create those conditions, so it neither confirms nor refutes the private observation for them. The part about checks held only weakly: passing tests, and even a good mutation score, said nothing about behaviour the tests never checked.
 
 ### 3.2 Checks that pass when there is nothing to check
 
@@ -54,10 +54,10 @@ In the same system, a mutation test (which plants small bugs and counts how many
 
 **Reproduction.** Partly reproduced: the first condition held, the rest did not, so the pre-registered verdict is **does not reproduce**.
 - The first condition held: with no instruction, **46%** of the agent's checks passed on empty or unmeasured input.
-- A single written rule ("an empty result never passes a check") then cut that to 8% on the checks written with it in view. It also cut it to **0%** on checks written later, in a separate step that only had the rule "available in the repo". We predicted the problem would come back there; it did not.
-- A guard built into the check framework also gave 0%.
+- A single written rule ("an empty result never passes a check") then cut that to 8% on the checks written with it in view. Checks written later, in a separate step, were at **0%**, where we had predicted a relapse. But that step was shown the earlier, rule-following checks and asked to match them, so it may have copied the pattern rather than applied the rule.
+- A guard built into the check framework gave 0%, as it must whenever the checks use the framework (all did).
 
-**Reading.** The tendency is real and large. The private recurrence came over weeks, with many agents and new kinds of check. A single later step on the same day is not that, and here the written rule was enough. The framework guard is still the cheaper and more reliable fix, because it cannot be forgotten.
+**Reading.** The tendency is real and large. The private recurrence came over weeks, with many agents and new kinds of check. A single later step on the same day, with rule-following examples in view, is not that, and here the written rule was enough. The framework guard is still the cheaper and more reliable fix, because it cannot be forgotten.
 
 ### 3.3 A reference implementation by the same author is not an independent check
 
@@ -65,44 +65,57 @@ In the same system, a mutation test (which plants small bugs and counts how many
 
 **Reproduction.** Partly reproduced.
 - **The same-conversation reference.** In all 5 runs it agreed with the implementation on all 20 test sequences, and it described itself as making "the same choices as the main implementation".
-- **The independent reference** (same model, fresh conversation) disagreed with the implementation on every sequence.
-- **Shared mistakes.** On the two planted contradictions, the same-conversation reference shared the implementation's mistake in 1 of 5 runs; the independent one in 0 of 5.
+- **The independent reference** (same model, fresh conversation) disagreed with the implementation on every sequence. In one run that was only because it crashed on construction.
+- **Shared mistakes.** On the two planted contradictions, the same-conversation reference shared the implementation's mistake in 1 of 5 runs; the independent one in 0 of 5. The independent one did make one of the planted mistakes itself in one run, just not where the implementation did.
 - **Disagreement with the correct version.** Every agent-written version disagreed with the hand-written correct version on nearly every sequence. The cause is about six places where the one-page spec can be reasonably read two ways: whether a delivery costs cash, how an average is taken, where rounding happens, what "undo" covers. So the comparison mostly measures different readings of a loose spec, which limits what it can show.
 
-**Reading.** A same-context reference is close to a copy of the implementation, so agreement with it is weak evidence. The independent reference also did what an oracle should: it disagreed, and pointed at exactly the places where the spec was unclear. That is useful whichever side was right.
+**Reading.** A same-context reference is close to a copy of the implementation, so agreement with it is weak evidence. The independent reference disagreed, as an independent check should, and its disagreements mostly fell on the places where the spec was unclear. That is useful whichever side was right.
 
 ### 3.4 Gates enforced by code vs gates written in prose
 
 **Private observation.** In the private system we found **no** breach of any owner gate enforced by code or a ledger (spending caps, irreversible actions). One sub-agent refused to spend on an approval relayed by another agent; it wanted the owner's own words. Gates that existed only as prose ("this is the owner's decision") behaved differently. The coordinating agent often decided, recorded the decision and offered a revert. Six such changes were never answered and became permanent.
 
-**Reproduction.** **Did not reproduce** (after a scoring fix, see §4).
-- **Code-enforced decision.** The agent always left it open (the harness enforces that), but mentioned it to the owner in only **40%** of runs.
-- **Prose-only decisions.** The agent left them open and asked the owner in **80%** of cases. It decided and recorded the decision in 2 of 10.
-- **The read-only helper with a bug.** The agent asked in 2 runs, worked around it and said so in 1, avoided it in 1, and used it unchanged in 1. It never edited it.
+**Reproduction.** **Did not reproduce** (after two rounds of scoring fixes, see §4).
+- **Code-enforced decision.** The agent always left it open (the harness enforces that), but asked the owner about it in only **20%** of runs.
+- **Prose-only decisions.** The agent asked the owner about every one (10 of 10). A behavioural probe confirmed it had left the decision open in 9 (**90%**); in the tenth the probe could not tell. It never decided on its own.
+- **The read-only helper with a bug.** The agent never edited it. It asked about it in 2 runs, avoided it and explained the bug in 2, and used it unchanged in 1.
 
 **Reading.** On a short task with a few clearly marked decisions, this agent respected prose gates well. The private pattern involved a coordinating agent holding a broad delegation, over weeks, with an owner who was often away. We think the authority to interpret a delegation is the variable that matters, and this reproduction did not vary it.
 
 ### 3.5 A second model
 
-We added Claude Haiku 5.5, a smaller model often used as a sub-agent, after the main results were in. The amendment fixed in advance that the run would be reported whichever way its verdicts went, provided no more than 10% of its calls were refused or cut off. The first attempt failed that bar: 53% of calls hit the output limit, most with no text at all, because the model's thinking used up the allowance. That run is kept and labelled as failed. A re-run with four times the output limits, otherwise identical, passed it (3 of 68 calls cut off, $0.62). With five runs per model, the comparison below is descriptive.
+We added Claude Haiku 5.5, a smaller model often used as a sub-agent, after the main results. The rule fixed in advance: report it whichever way it goes, as long as no more than 10% of its calls are refused or cut off. The first attempt failed that bar. 53% of calls hit the output limit, mostly with no text, because the model's thinking used the whole allowance. That run is kept and labelled as failed. A re-run with four times the output limit passed (3 of 68 calls cut off, $0.62). With five runs per model, the comparison is descriptive.
 
-- **Over-claiming appeared.** Haiku marked 26–30 rules "done" while the hidden tests confirmed 24–30. The median gap was **+4** against Sonnet's −6, which moves the pre-registered verdict for 3.1 from "does not reproduce" to **partial**. It falls short of "reproduces" because the presence check was not green in every run (the demonstration failed in 2 of 5), and because the reach check flagged none of the gap: every rule's behaviour was reached, it just behaved differently from the hidden tests.
-- **Where it over-claimed.** The misses fell into two groups. In 4 of 5 runs, the supplier rules failed because the module demanded a warehouse for an order or a delivery, which the spec's call signatures do not take. The spec does not say where delivered stock goes, so this is partly one of its loose points, but Sonnet kept to the given signatures. In 3 of 5 runs, lots were not discarded or shipped in the order the hidden tests expect, which also broke the order of end-of-day steps. We have not established whether that is an off-by-one error or another reading of "older than". In every run the agent's own tests passed on every rule: they exercised its own interface and its own reading.
-- **Mutation score and missing rules** reproduced again, now on 11 modules instead of 2: modules with a whole rule missing still scored a median 73%.
+- **Over-claiming appeared.** Haiku marked 26–30 rules "done"; the hidden tests confirmed 24–30. The median gap was **+4** (Sonnet: −6), which moves 3.1's verdict from "does not reproduce" to **partial**. It is not "reproduces" because the reach check (the inverted check from 3.1) flagged none of the gap: every rule's behaviour was reached, it just behaved differently from the hidden tests.
+- **Where it over-claimed.** Mostly in two places:
+  - In 4 runs, its supplier code demanded a warehouse argument that the spec's call signatures don't have. The spec doesn't say where deliveries go, but Sonnet kept to the signatures.
+  - In 3 runs, stock didn't expire or ship in the order the hidden tests expect. We haven't established whether that is an off-by-one bug or another reading of "older than".
+
+  Smaller misses were on the planted shelf-life contradiction and the notification log. Its own tests passed on every rule in every run, because they tested its own interface and its own reading.
+- **Mutation score with a whole rule failing** stayed high again, on 11 modules (median 73%). None is a forgotten rule. They are the owner-reserved rule, the warehouse mismatch and the lot-order failures.
 - **Claimed fixes.** 15 claimed, 0 landed, out of 34 review comments.
-- **Everything else had the same shape.** 72% of checks passed on empty input at first (Sonnet: 46%), and the written rule cut later checks to 2%. The same-conversation reference agreed with the implementation every time. The agent asked about written-only decisions more often than code-enforced ones (70% vs 20%).
+- **Otherwise similar, with one more verdict change.**
+  - Empty-input checks: 72% passed at first (Sonnet: 46%), and the written rule cut later ones to 2%.
+  - References: the same-conversation reference again always agreed. Here the fresh-conversation one also shared the planted shelf-life mistake, in all 5 runs, so 3.3's verdict is **does not reproduce** for Haiku.
+  - Owner decisions: Haiku never asked about the code-enforced decision, and stopped at 80% of the written-only ones.
 
-**Reading.** The over-claiming pattern from the private system did show up on the toy spec, but only with the smaller model, and only on rules where the agent's tests could agree with its own interface or reading while the hidden tests did not. Part of it traces to a loose point in the spec. That is a narrow result from five runs. It does suggest that "the agent was cautious" in 3.1 is partly a property of the model, not only of the task's size, and that a reach check does not catch an agent that reaches every rule and reads some of them wrongly.
+**Reading.** The private over-claiming pattern did show up, but only with the smaller model. It appeared only where the agent's tests could agree with its own interface or reading while the hidden tests did not, and part of it traces to a loose point in the spec. It is a narrow, five-run result. It does suggest that Sonnet's caution in 3.1 is partly a property of the model. It also suggests that a reach check cannot catch an agent that reaches every rule but reads some of them wrongly.
 
 ## 4. A note on our own measurement
 
-An independent audit of the reproduction's scoring code, done after the live run and before any interpretation, found two bugs:
-- The prose-gate check passed the decision value in itself and then read it back as the agent's choice. That produced a false "reproduces" for 3.4.
-- The cross-check compared behaviour the spec deliberately leaves open, such as exact random draws.
+An independent audit of the scoring code, after the live run and before any interpretation, found two bugs:
+- The prose-gate check read its own injected value back as the agent's choice. That produced a false "reproduces" for 3.4.
+- The cross-check compared behaviour the spec leaves open.
 
-Both were fixed as dated amendments to the pre-registration. The saved responses were re-scored offline with no new model calls, and the original verdicts are kept beside the corrected ones. A third change only relabelled one verdict to match the pre-registered wording.
+After release v1.0.0, three more independent reviewers recomputed every number. A cold offline replay matched every table byte for byte, but they found two more bugs, both in 3.4:
+- The code-gate check counted questions about the buggy helper, which mention "rounding", as questions about the rounding decision.
+- The penalty probe sometimes never triggered a payment, and scored that as a decision.
 
-We note the irony. The class of error this note is about appeared in our own harness, and a reviewer independent of the builder caught it. We would not trust these numbers without that audit.
+They also flagged sentences that said more than the data.
+
+Every fix is a dated amendment to the pre-registration, applied by re-scoring the saved responses offline, with the earlier verdicts kept beside the corrected ones. No verdict changed in the second round; the 3.4 numbers and some wording did.
+
+We note the irony. The class of error this note is about appeared in our own harness twice, and reviewers independent of the builder caught it both times. We would not trust these numbers without those audits.
 
 ## 5. Limitations
 
@@ -110,7 +123,8 @@ We note the irony. The class of error this note is about appeared in our own har
 - **The private observations come from one system with one owner.** They were mined from agent-written logs, which only show what agents chose to write down.
 - **The hidden tests follow one reading of the spec.** About six rules have a second reasonable reading, and that affects 3.1's claimed-fix count and 3.3's comparison with the correct version.
 - **No sampling randomness.** The model API we used does not accept a temperature or a seed, so runs differ only in the order in which the rules were presented.
-- **Some scoring relies on keyword matching.** Whether a decision was "recorded", in 3.4, is judged that way and can miss unusual wording.
+- **Some scoring relies on keyword matching.** In 3.4, whether the agent asked about a decision or recorded one is judged that way, and can miss or misattribute unusual wording. The read-only helper's labels are keyword-only.
+- **3.2's later step saw rule-following examples,** so it cannot separate following a written rule from copying a pattern.
 
 ## 6. Open questions
 

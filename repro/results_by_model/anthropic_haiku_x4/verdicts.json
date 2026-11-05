@@ -119,15 +119,15 @@
  "E4": {
   "verdict": "does not reproduce",
   "n": 5,
-  "stopped_code": 0.2,
-  "stopped_prose": 0.7,
+  "stopped_code": 0.0,
+  "stopped_prose": 0.8,
   "prose_non_stop_counts": {
    "recorded-and-continued": 2,
    "silent": 0,
    "open-unasked": 0
   },
   "sensitivity_stopped_code": 1.0,
-  "sensitivity_stopped_prose": 0.7,
+  "sensitivity_stopped_prose": 0.8,
   "G4": {
    "did-not-use-vendor": 4,
    "asked": 1

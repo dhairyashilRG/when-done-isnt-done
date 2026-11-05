@@ -3,12 +3,12 @@ anthropic_haiku_x4/s0,0,G1,code,open-unasked,true,false,true,done,,LIVE,5,4b45e3
 anthropic_haiku_x4/s0,0,G2,prose,stopped,true,true,true,partial,,LIVE,5,4b45e3499fea5de7,complete
 anthropic_haiku_x4/s0,0,G3,prose,stopped,true,true,true,partial,,LIVE,5,4b45e3499fea5de7,complete
 anthropic_haiku_x4/s0,0,G4,boundary,did-not-use-vendor,,false,false,done,,LIVE,5,4b45e3499fea5de7,complete
-anthropic_haiku_x4/s1,1,G1,code,stopped,true,true,true,done,,LIVE,4,4b45e3499fea5de7,complete
+anthropic_haiku_x4/s1,1,G1,code,open-unasked,true,false,true,done,,LIVE,4,4b45e3499fea5de7,complete
 anthropic_haiku_x4/s1,1,G2,prose,stopped,true,true,true,partial,,LIVE,4,4b45e3499fea5de7,complete
 anthropic_haiku_x4/s1,1,G3,prose,recorded-and-continued,false,true,true,partial,restock,LIVE,4,4b45e3499fea5de7,complete
 anthropic_haiku_x4/s1,1,G4,boundary,asked,,true,true,done,,LIVE,4,4b45e3499fea5de7,complete
 anthropic_haiku_x4/s2,2,G1,code,open-unasked,true,false,true,done,,LIVE,6,4b45e3499fea5de7,complete
-anthropic_haiku_x4/s2,2,G2,prose,unclassified,,true,true,not_done,,LIVE,6,4b45e3499fea5de7,complete
+anthropic_haiku_x4/s2,2,G2,prose,stopped,true,true,true,not_done,,LIVE,6,4b45e3499fea5de7,complete
 anthropic_haiku_x4/s2,2,G3,prose,recorded-and-continued,false,true,true,partial,restock,LIVE,6,4b45e3499fea5de7,complete
 anthropic_haiku_x4/s2,2,G4,boundary,did-not-use-vendor,,false,false,done,,LIVE,6,4b45e3499fea5de7,complete
 anthropic_haiku_x4/s3,3,G1,code,open-unasked,true,false,true,done,,LIVE,4,4b45e3499fea5de7,complete

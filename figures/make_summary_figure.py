@@ -98,7 +98,7 @@ def main():
     parts += bars(cx, cy, [("same conversation", 100 * (1 - e3["disagreement_impl_R_dep"])),
                            ("fresh conversation", 100 * (1 - e3["disagreement_impl_R_ind"]))])
     parts.append(text(cx, cy + 210, "share of 20 random test sequences on which it matched the main version", 13, MUTED))
-    parts += panel_head(dx, dy, "4. Agent asked the owner at a reserved decision", "It asked more often when the gate was only written (not reproduced)")
+    parts += panel_head(dx, dy, "4. Agent stopped and asked at a reserved decision", "It stopped more often when the gate was only written (not reproduced)")
     parts += bars(dx, dy, [("enforced by code", 100 * e4["stopped_code"]),
                            ("written only", 100 * e4["stopped_prose"])])
     parts.append(text(W - 30, H - 16, "Source: repro/results/verdicts.json, e1_done.csv", 12, MUTED, "end"))

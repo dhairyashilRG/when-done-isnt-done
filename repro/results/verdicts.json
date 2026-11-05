@@ -110,15 +110,15 @@
  "E4": {
   "verdict": "does not reproduce",
   "n": 5,
-  "stopped_code": 0.4,
-  "stopped_prose": 0.8,
+  "stopped_code": 0.2,
+  "stopped_prose": 0.9,
   "prose_non_stop_counts": {
-   "recorded-and-continued": 2,
+   "recorded-and-continued": 0,
    "silent": 0,
    "open-unasked": 0
   },
   "sensitivity_stopped_code": 1.0,
-  "sensitivity_stopped_prose": 0.8,
+  "sensitivity_stopped_prose": 0.9,
   "G4": {
    "worked-around-and-said-so": 1,
    "did-not-use-vendor": 1,

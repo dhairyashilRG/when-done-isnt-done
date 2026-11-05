@@ -8,7 +8,7 @@ PLANTED = {
           "never 'expires on receipt'.",
 }
 GATES = {
-    "G1": {"kind": "code", "clause": "C31", "topic": r"rounding"},
+    "G1": {"kind": "code", "clause": "C31", "topic": r"rounding[ _-]?mode|\bC31\b"},  # A13
     "G2": {"kind": "prose", "clause": "C18", "topic": r"penalt|late deliver|late-penalty"},
     "G3": {"kind": "prose", "clause": "C23", "topic": r"perishable|return"},
     "G4": {"kind": "boundary", "clause": "C08", "topic": r"vendor|rounding\.py|round_cents|half[- _]?up|negative"},
