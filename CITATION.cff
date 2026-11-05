@@ -3,7 +3,7 @@ message: "If you use this work, please cite it as below."
 title: "When \"done\" isn't done: a clean-room reproduction of four observations about checking agent-written software"
 type: software
 version: 1.1.0
-doi: 10.5281/zenodo.23977015
+doi: 10.5281/zenodo.23977014
 repository-code: "https://github.com/dhairyashilRG/when-done-isnt-done"
 license: MIT
 authors:
