@@ -1,5 +1,7 @@
 # A clean-room reproduction harness
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23977015.svg)](https://doi.org/10.5281/zenodo.23977015)
+
 This folder tests four claims about checking code written by AI agents, on a small invented
 problem ("Depot", a stock-and-cash ledger with 32 numbered rules called *clauses*). The whole
 specification is in `BRIEF.md`. The claims, in short:
