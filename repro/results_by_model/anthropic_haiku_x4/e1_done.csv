@@ -1,0 +1,6 @@
+run,provider,model,seed,ticked,agent_pass,presence,demo_ok,reach_reached,heldout_pass,heldout_partial,gap,gap_state_dependent,gap_notification_only,reach_flags_of_gap,fix_iterations,self_report_overall,calls,refused_calls,truncated_calls,provenance,depends_on_responses,recording_set_manifest,status
+anthropic_haiku_x4/s0,anthropic_haiku_x4,claude-haiku-5-5,0,30,32,true,true,32,24,3,6,3,3,0,1,NOT DONE,14,0,1,LIVE,5,4b45e3499fea5de7,complete
+anthropic_haiku_x4/s1,anthropic_haiku_x4,claude-haiku-5-5,1,28,32,false,false,32,24,5,4,3,3,0,0,NOT DONE,13,0,1,LIVE,4,4b45e3499fea5de7,complete
+anthropic_haiku_x4/s2,anthropic_haiku_x4,claude-haiku-5-5,2,28,32,true,true,32,24,4,4,2,3,0,2,NOT DONE,15,0,1,LIVE,6,4b45e3499fea5de7,complete
+anthropic_haiku_x4/s3,anthropic_haiku_x4,claude-haiku-5-5,3,28,32,true,true,32,30,2,-2,1,1,0,0,NOT DONE,13,0,0,LIVE,4,4b45e3499fea5de7,complete
+anthropic_haiku_x4/s4,anthropic_haiku_x4,claude-haiku-5-5,4,26,32,false,false,32,24,3,2,2,2,0,0,NOT DONE,13,0,0,LIVE,4,4b45e3499fea5de7,complete

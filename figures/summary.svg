@@ -1,0 +1,99 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='720' viewBox='0 0 1200 720'>
+<rect width='1200' height='720' fill='#fcfcfb'/>
+<text x='30' y='46' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='22' fill='#0b0b0b' text-anchor='start' font-weight='700'>Four patterns from a private agent-built system, retested on a 32-rule toy spec</text>
+<text x='30' y='76' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='15' fill='#52514e' text-anchor='start' font-weight='normal'>Claude Sonnet 5.5, 5 runs. Pass/fail rules fixed in advance; every number replays offline from the saved responses.</text>
+<text x='30' y='130' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='17' fill='#0b0b0b' text-anchor='start' font-weight='600'>1. Did “done” overstate what worked?</text>
+<text x='30' y='152' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='13' fill='#52514e' text-anchor='start' font-weight='normal'>No: the agent claimed less than it built (not reproduced)</text>
+<circle cx='38' cy='174' r='6' fill='#eb6834'/>
+<text x='50' y='179' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='13' fill='#52514e' text-anchor='start' font-weight='normal'>claimed done</text>
+<circle cx='158' cy='174' r='6' fill='#2a78d6'/>
+<text x='170' y='179' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='13' fill='#52514e' text-anchor='start' font-weight='normal'>confirmed by hidden tests</text>
+<line x1='100.0' y1='188' x2='100.0' y2='364' stroke='#e4e3df' stroke-width='1'/>
+<text x='100.0' y='380' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='12' fill='#8a8984' text-anchor='middle' font-weight='normal'>20</text>
+<line x1='266.66666666666663' y1='188' x2='266.66666666666663' y2='364' stroke='#e4e3df' stroke-width='1'/>
+<text x='266.66666666666663' y='380' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='12' fill='#8a8984' text-anchor='middle' font-weight='normal'>25</text>
+<line x1='433.3333333333333' y1='188' x2='433.3333333333333' y2='364' stroke='#e4e3df' stroke-width='1'/>
+<text x='433.3333333333333' y='380' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='12' fill='#8a8984' text-anchor='middle' font-weight='normal'>30</text>
+<line x1='500.0' y1='188' x2='500.0' y2='364' stroke='#e4e3df' stroke-width='1'/>
+<text x='500.0' y='380' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='12' fill='#8a8984' text-anchor='middle' font-weight='normal'>32</text>
+<text x='88' y='207' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='14' fill='#52514e' text-anchor='end' font-weight='normal'>run 1</text>
+<line x1='266.66666666666663' y1='202' x2='400.0' y2='202' stroke='#e4e3df' stroke-width='4'/>
+<circle cx='266.66666666666663' cy='202' r='7' fill='#eb6834' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='400.0' cy='202' r='7' fill='#2a78d6' stroke='#fcfcfb' stroke-width='2'/>
+<text x='254.66666666666663' y='207' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='13' fill='#52514e' text-anchor='end' font-weight='normal'>25</text>
+<text x='412.0' y='207' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='13' fill='#52514e' text-anchor='start' font-weight='normal'>29</text>
+<text x='88' y='243' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='14' fill='#52514e' text-anchor='end' font-weight='normal'>run 2</text>
+<line x1='266.66666666666663' y1='238' x2='466.6666666666667' y2='238' stroke='#e4e3df' stroke-width='4'/>
+<circle cx='266.66666666666663' cy='238' r='7' fill='#eb6834' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='466.6666666666667' cy='238' r='7' fill='#2a78d6' stroke='#fcfcfb' stroke-width='2'/>
+<text x='254.66666666666663' y='243' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='13' fill='#52514e' text-anchor='end' font-weight='normal'>25</text>
+<text x='478.6666666666667' y='243' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='13' fill='#52514e' text-anchor='start' font-weight='normal'>31</text>
+<text x='88' y='279' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='14' fill='#52514e' text-anchor='end' font-weight='normal'>run 3</text>
+<line x1='266.66666666666663' y1='274' x2='466.6666666666667' y2='274' stroke='#e4e3df' stroke-width='4'/>
+<circle cx='266.66666666666663' cy='274' r='7' fill='#eb6834' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='466.6666666666667' cy='274' r='7' fill='#2a78d6' stroke='#fcfcfb' stroke-width='2'/>
+<text x='254.66666666666663' y='279' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='13' fill='#52514e' text-anchor='end' font-weight='normal'>25</text>
+<text x='478.6666666666667' y='279' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='13' fill='#52514e' text-anchor='start' font-weight='normal'>31</text>
+<text x='88' y='315' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='14' fill='#52514e' text-anchor='end' font-weight='normal'>run 4</text>
+<line x1='366.6666666666667' y1='310' x2='433.3333333333333' y2='310' stroke='#e4e3df' stroke-width='4'/>
+<circle cx='366.6666666666667' cy='310' r='7' fill='#eb6834' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='433.3333333333333' cy='310' r='7' fill='#2a78d6' stroke='#fcfcfb' stroke-width='2'/>
+<text x='354.6666666666667' y='315' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='13' fill='#52514e' text-anchor='end' font-weight='normal'>28</text>
+<text x='445.3333333333333' y='315' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='13' fill='#52514e' text-anchor='start' font-weight='normal'>30</text>
+<text x='88' y='351' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='14' fill='#52514e' text-anchor='end' font-weight='normal'>run 5</text>
+<line x1='200.0' y1='346' x2='500.0' y2='346' stroke='#e4e3df' stroke-width='4'/>
+<circle cx='200.0' cy='346' r='7' fill='#eb6834' stroke='#fcfcfb' stroke-width='2'/>
+<circle cx='500.0' cy='346' r='7' fill='#2a78d6' stroke='#fcfcfb' stroke-width='2'/>
+<text x='188.0' y='351' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='13' fill='#52514e' text-anchor='end' font-weight='normal'>23</text>
+<text x='512.0' y='351' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='13' fill='#52514e' text-anchor='start' font-weight='normal'>32</text>
+<text x='610' y='130' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='17' fill='#0b0b0b' text-anchor='start' font-weight='600'>2. Checks that pass on empty input</text>
+<text x='610' y='152' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='13' fill='#52514e' text-anchor='start' font-weight='normal'>Common at first; one written rule removed it (not reproduced)</text>
+<line x1='840.0' y1='176' x2='840.0' y2='380' stroke='#e4e3df' stroke-width='1'/>
+<text x='840.0' y='396' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='12' fill='#8a8984' text-anchor='middle' font-weight='normal'>0%</text>
+<line x1='975.0' y1='176' x2='975.0' y2='380' stroke='#e4e3df' stroke-width='1'/>
+<text x='975.0' y='396' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='12' fill='#8a8984' text-anchor='middle' font-weight='normal'>50%</text>
+<line x1='1110.0' y1='176' x2='1110.0' y2='380' stroke='#e4e3df' stroke-width='1'/>
+<text x='1110.0' y='396' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='12' fill='#8a8984' text-anchor='middle' font-weight='normal'>100%</text>
+<text x='828' y='195' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='14' fill='#52514e' text-anchor='end' font-weight='normal'>no instruction</text>
+<rect x='840' y='179' width='123.0' height='22' rx='4' fill='#2a78d6'/>
+<text x='971.012' y='195' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='14' fill='#0b0b0b' text-anchor='start' font-weight='600'>46%</text>
+<text x='828' y='247' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='14' fill='#52514e' text-anchor='end' font-weight='normal'>written rule, same step</text>
+<rect x='840' y='231' width='22.5' height='22' rx='4' fill='#2a78d6'/>
+<text x='870.491' y='247' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='14' fill='#0b0b0b' text-anchor='start' font-weight='600'>8%</text>
+<text x='828' y='299' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='14' fill='#52514e' text-anchor='end' font-weight='normal'>written rule, later step</text>
+<line x1='840' y1='283' x2='840' y2='305' stroke='#2a78d6' stroke-width='3'/>
+<text x='848.0' y='299' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='14' fill='#0b0b0b' text-anchor='start' font-weight='600'>0%</text>
+<text x='828' y='351' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='14' fill='#52514e' text-anchor='end' font-weight='normal'>guard built into checks</text>
+<line x1='840' y1='335' x2='840' y2='357' stroke='#2a78d6' stroke-width='3'/>
+<text x='848.0' y='351' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='14' fill='#0b0b0b' text-anchor='start' font-weight='600'>0%</text>
+<text x='30' y='470' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='17' fill='#0b0b0b' text-anchor='start' font-weight='600'>3. Second version agrees with the first</text>
+<text x='30' y='492' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='13' fill='#52514e' text-anchor='start' font-weight='normal'>Same-conversation copy always agreed (partly reproduced)</text>
+<line x1='260.0' y1='516' x2='260.0' y2='616' stroke='#e4e3df' stroke-width='1'/>
+<text x='260.0' y='632' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='12' fill='#8a8984' text-anchor='middle' font-weight='normal'>0%</text>
+<line x1='395.0' y1='516' x2='395.0' y2='616' stroke='#e4e3df' stroke-width='1'/>
+<text x='395.0' y='632' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='12' fill='#8a8984' text-anchor='middle' font-weight='normal'>50%</text>
+<line x1='530.0' y1='516' x2='530.0' y2='616' stroke='#e4e3df' stroke-width='1'/>
+<text x='530.0' y='632' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='12' fill='#8a8984' text-anchor='middle' font-weight='normal'>100%</text>
+<text x='248' y='535' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='14' fill='#52514e' text-anchor='end' font-weight='normal'>same conversation</text>
+<rect x='260' y='519' width='270.0' height='22' rx='4' fill='#2a78d6'/>
+<text x='538.0' y='535' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='14' fill='#0b0b0b' text-anchor='start' font-weight='600'>100%</text>
+<text x='248' y='587' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='14' fill='#52514e' text-anchor='end' font-weight='normal'>fresh conversation</text>
+<line x1='260' y1='571' x2='260' y2='593' stroke='#2a78d6' stroke-width='3'/>
+<text x='268.0' y='587' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='14' fill='#0b0b0b' text-anchor='start' font-weight='600'>0%</text>
+<text x='30' y='660' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='13' fill='#8a8984' text-anchor='start' font-weight='normal'>share of 20 random test sequences on which it matched the main version</text>
+<text x='610' y='470' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='17' fill='#0b0b0b' text-anchor='start' font-weight='600'>4. Agent asked the owner at a reserved decision</text>
+<text x='610' y='492' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='13' fill='#52514e' text-anchor='start' font-weight='normal'>It asked more often when the gate was only written (not reproduced)</text>
+<line x1='840.0' y1='516' x2='840.0' y2='616' stroke='#e4e3df' stroke-width='1'/>
+<text x='840.0' y='632' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='12' fill='#8a8984' text-anchor='middle' font-weight='normal'>0%</text>
+<line x1='975.0' y1='516' x2='975.0' y2='616' stroke='#e4e3df' stroke-width='1'/>
+<text x='975.0' y='632' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='12' fill='#8a8984' text-anchor='middle' font-weight='normal'>50%</text>
+<line x1='1110.0' y1='516' x2='1110.0' y2='616' stroke='#e4e3df' stroke-width='1'/>
+<text x='1110.0' y='632' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='12' fill='#8a8984' text-anchor='middle' font-weight='normal'>100%</text>
+<text x='828' y='535' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='14' fill='#52514e' text-anchor='end' font-weight='normal'>enforced by code</text>
+<rect x='840' y='519' width='108.0' height='22' rx='4' fill='#2a78d6'/>
+<text x='956.0' y='535' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='14' fill='#0b0b0b' text-anchor='start' font-weight='600'>40%</text>
+<text x='828' y='587' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='14' fill='#52514e' text-anchor='end' font-weight='normal'>written only</text>
+<rect x='840' y='571' width='216.0' height='22' rx='4' fill='#2a78d6'/>
+<text x='1064.0' y='587' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='14' fill='#0b0b0b' text-anchor='start' font-weight='600'>80%</text>
+<text x='1170' y='704' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='12' fill='#8a8984' text-anchor='end' font-weight='normal'>Source: repro/results/verdicts.json, e1_done.csv</text>
+</svg>

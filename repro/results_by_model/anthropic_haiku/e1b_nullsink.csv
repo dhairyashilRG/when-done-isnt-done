@@ -1,0 +1,6 @@
+run,seed,presence_null,demo_ok_null,agent_pass_null,notif_clauses_heldout_not_pass_null,notif_fail_while_presence_green,notif_fail_while_presence_and_agent_pass_green,provenance,depends_on_responses,recording_set_manifest,status
+anthropic_haiku/s0,0,false,false,0,6,0,0,LIVE,6,c4a23e499c9182c7,complete
+anthropic_haiku/s1,1,false,false,0,6,0,0,LIVE,6,c4a23e499c9182c7,complete
+anthropic_haiku/s2,2,false,false,0,6,0,0,LIVE,6,c4a23e499c9182c7,complete
+anthropic_haiku/s3,3,false,false,0,6,0,0,LIVE,6,c4a23e499c9182c7,complete
+anthropic_haiku/s4,4,false,false,0,6,0,0,LIVE,6,c4a23e499c9182c7,complete

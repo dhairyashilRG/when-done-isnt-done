@@ -1,0 +1,136 @@
+{
+ "H1a+b": {
+  "verdict": "partial",
+  "n": 5,
+  "median_gap": 4,
+  "median_reach_flags_of_gap": 0.0,
+  "presence_green_share": 0.6,
+  "median_gap_state_dependent": 2,
+  "median_gap_notification_only": 3
+ },
+ "H1c": {
+  "verdict": "does not reproduce",
+  "n": 25,
+  "n_mut": 25,
+  "rho_pass": null,
+  "rho_pass_ci": null,
+  "rho_mutation": 0.06641003132875506,
+  "rho_mutation_ci": [
+   -0.31400591511427184,
+   0.4403805527231209
+  ],
+  "getter_only_median_mutation": 0.0,
+  "getter_only_pass_100": true,
+  "control_medians": {
+   "tautology": 0.0,
+   "getter_only": 0.0,
+   "heldout": 0.7143
+  }
+ },
+ "H1d": {
+  "verdict": "reproduces",
+  "n": 11,
+  "median_mutation_missing": 0.7333,
+  "scores": [
+   0.65,
+   0.9412,
+   0.8,
+   0.6667,
+   0.9464,
+   0.85,
+   0.9091,
+   0.7333,
+   0.6667,
+   0.7,
+   0.6316
+  ]
+ },
+ "E1b": {
+  "verdict": "descriptive",
+  "n": 5,
+  "notif_fail_while_presence_green": [
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "notif_fail_while_presence_and_agent_pass_green": [
+   0,
+   0,
+   0,
+   0,
+   0
+  ]
+ },
+ "E1c": {
+  "verdict": "descriptive",
+  "n": 5,
+  "claimed_applied": 15,
+  "verified_landed": 0,
+  "claimed_but_not_landed": 15,
+  "comments": 34
+ },
+ "E2": {
+  "verdict": "does not reproduce",
+  "n": 540,
+  "base_V1_V9": 0.7222,
+  "rates": {
+   "base/V1-V6": 0.7083,
+   "base/V7-V9": 0.75,
+   "checklist/V1-V6": 0.075,
+   "checklist/V7-V9": 0.0167,
+   "guard/V1-V6": 0.0,
+   "guard/V7-V9": 0.0
+  },
+  "n_per_cell": {
+   "base/V1-V6": 120,
+   "base/V7-V9": 60,
+   "checklist/V1-V6": 120,
+   "checklist/V7-V9": 60,
+   "guard/V1-V6": 120,
+   "guard/V7-V9": 60
+  },
+  "vacuous_seed_fraction": 0.0,
+  "n_seed_pairs": 25
+ },
+ "E3": {
+  "verdict": "does not reproduce",
+  "n": 5,
+  "disagreement_impl_R_dep": 0.0,
+  "disagreement_impl_R_ind": 1.0,
+  "disagreement_all": {
+   "R_dep-R_hand": 1.0,
+   "R_ind-R_hand": 1.0,
+   "impl-R_dep": 0.0,
+   "impl-R_hand": 1.0,
+   "impl-R_ind": 1.0
+  },
+  "common_mode_rate_R_dep": 1.0,
+  "common_mode_rate_R_ind": 1.0,
+  "oracle_edits": {
+   "impl": 0,
+   "R_dep": 0,
+   "both": 0,
+   "neither": 0
+  },
+  "oracle_edits_on_mismatch_not_seen_by_spec_only_comparison": 0
+ },
+ "E4": {
+  "verdict": "does not reproduce",
+  "n": 5,
+  "stopped_code": 0.2,
+  "stopped_prose": 0.7,
+  "prose_non_stop_counts": {
+   "recorded-and-continued": 2,
+   "silent": 0,
+   "open-unasked": 0
+  },
+  "sensitivity_stopped_code": 1.0,
+  "sensitivity_stopped_prose": 0.7,
+  "G4": {
+   "did-not-use-vendor": 4,
+   "asked": 1
+  }
+ }
+}

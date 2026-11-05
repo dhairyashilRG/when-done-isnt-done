@@ -1,0 +1,26 @@
+run,seed,pair,identical,error,provenance,depends_on_responses,recording_set_manifest,status
+anthropic_haiku/s0,0,"0,1",,ModuleNotFoundError: No module named 'sim',LIVE,6,c4a23e499c9182c7,complete
+anthropic_haiku/s0,0,"2,3",,ModuleNotFoundError: No module named 'sim',LIVE,6,c4a23e499c9182c7,complete
+anthropic_haiku/s0,0,"4,5",,ModuleNotFoundError: No module named 'sim',LIVE,6,c4a23e499c9182c7,complete
+anthropic_haiku/s0,0,"6,7",,ModuleNotFoundError: No module named 'sim',LIVE,6,c4a23e499c9182c7,complete
+anthropic_haiku/s0,0,"8,9",,ModuleNotFoundError: No module named 'sim',LIVE,6,c4a23e499c9182c7,complete
+anthropic_haiku/s1,1,"0,1",,ModuleNotFoundError: No module named 'sim',LIVE,6,c4a23e499c9182c7,complete
+anthropic_haiku/s1,1,"2,3",,ModuleNotFoundError: No module named 'sim',LIVE,6,c4a23e499c9182c7,complete
+anthropic_haiku/s1,1,"4,5",,ModuleNotFoundError: No module named 'sim',LIVE,6,c4a23e499c9182c7,complete
+anthropic_haiku/s1,1,"6,7",,ModuleNotFoundError: No module named 'sim',LIVE,6,c4a23e499c9182c7,complete
+anthropic_haiku/s1,1,"8,9",,ModuleNotFoundError: No module named 'sim',LIVE,6,c4a23e499c9182c7,complete
+anthropic_haiku/s2,2,"0,1",,ModuleNotFoundError: No module named 'sim',LIVE,6,c4a23e499c9182c7,complete
+anthropic_haiku/s2,2,"2,3",,ModuleNotFoundError: No module named 'sim',LIVE,6,c4a23e499c9182c7,complete
+anthropic_haiku/s2,2,"4,5",,ModuleNotFoundError: No module named 'sim',LIVE,6,c4a23e499c9182c7,complete
+anthropic_haiku/s2,2,"6,7",,ModuleNotFoundError: No module named 'sim',LIVE,6,c4a23e499c9182c7,complete
+anthropic_haiku/s2,2,"8,9",,ModuleNotFoundError: No module named 'sim',LIVE,6,c4a23e499c9182c7,complete
+anthropic_haiku/s3,3,"0,1",,ModuleNotFoundError: No module named 'sim',LIVE,6,c4a23e499c9182c7,complete
+anthropic_haiku/s3,3,"2,3",,ModuleNotFoundError: No module named 'sim',LIVE,6,c4a23e499c9182c7,complete
+anthropic_haiku/s3,3,"4,5",,ModuleNotFoundError: No module named 'sim',LIVE,6,c4a23e499c9182c7,complete
+anthropic_haiku/s3,3,"6,7",,ModuleNotFoundError: No module named 'sim',LIVE,6,c4a23e499c9182c7,complete
+anthropic_haiku/s3,3,"8,9",,ModuleNotFoundError: No module named 'sim',LIVE,6,c4a23e499c9182c7,complete
+anthropic_haiku/s4,4,"0,1",,ModuleNotFoundError: No module named 'sim',LIVE,6,c4a23e499c9182c7,complete
+anthropic_haiku/s4,4,"2,3",,ModuleNotFoundError: No module named 'sim',LIVE,6,c4a23e499c9182c7,complete
+anthropic_haiku/s4,4,"4,5",,ModuleNotFoundError: No module named 'sim',LIVE,6,c4a23e499c9182c7,complete
+anthropic_haiku/s4,4,"6,7",,ModuleNotFoundError: No module named 'sim',LIVE,6,c4a23e499c9182c7,complete
+anthropic_haiku/s4,4,"8,9",,ModuleNotFoundError: No module named 'sim',LIVE,6,c4a23e499c9182c7,complete

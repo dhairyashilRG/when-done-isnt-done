@@ -1,0 +1,5 @@
+<notes>
+- C18: the late-penalty percentage is not decided; I assumed 10% for now (money.LATE_PENALTY_PCT) until the owner decides.
+- C11: `transfer_credit_cents_per_unit` is applied as written in the data table.
+</notes>
+<ask_owner>Which rounding mode should the depot use for list prices?</ask_owner>

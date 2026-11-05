@@ -1,0 +1,6 @@
+run,seed,presence_null,demo_ok_null,agent_pass_null,notif_clauses_heldout_not_pass_null,notif_fail_while_presence_green,notif_fail_while_presence_and_agent_pass_green,provenance,depends_on_responses,recording_set_manifest,status
+anthropic/s0,0,false,false,23,6,0,0,LIVE,4,2db7beee704693f8,complete
+anthropic/s1,1,false,false,25,6,0,0,LIVE,4,2db7beee704693f8,complete
+anthropic/s2,2,false,false,22,6,0,0,LIVE,6,2db7beee704693f8,complete
+anthropic/s3,3,false,false,25,6,0,0,LIVE,6,2db7beee704693f8,complete
+anthropic/s4,4,false,false,22,6,0,0,LIVE,5,2db7beee704693f8,complete

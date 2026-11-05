@@ -1,0 +1,121 @@
+"""Synthetic agent tests (after the fix loop)."""
+import pytest
+
+from inventory import Depot, DepotError
+
+
+def make(cash=100_000):
+    d = Depot(["A", "B"], {"A": 500, "B": 500}, cash, rounding_mode="ROUND_HALF_EVEN")
+    d.add_item("BOLT", 12, 50)
+    d.add_item("GLUE", 240, 5, shelf_life_days=7)
+    return d
+
+
+def test_C01_duplicate():
+    with pytest.raises(DepotError):
+        make().add_item("BOLT", 12, 50)
+
+
+def test_C02_unknown_sku():
+    with pytest.raises(DepotError):
+        make().receive("NOPE", 1, "A")
+
+
+def test_C04_receive_and_capacity():
+    d = make()
+    d.receive("BOLT", 10, "A")
+    assert d.stock("BOLT", "A") == 10
+    with pytest.raises(DepotError):
+        d.receive("BOLT", 600, "A")
+
+
+def test_C05_cost():
+    d = make()
+    d.receive("BOLT", 10, "A")
+    assert d.cash == 100_000 - 120
+
+
+def test_C06_insufficient_stock():
+    d = make()
+    with pytest.raises(DepotError):
+        d.ship("BOLT", 1, "A", 10)
+
+
+def test_C07_ship_adds_cash():
+    d = make()
+    d.receive("BOLT", 10, "A")
+    c = d.cash
+    d.ship("BOLT", 5, "A", 16)
+    assert d.cash == c + 80
+
+
+def test_C08_list_price():
+    assert make().list_price("BOLT") == 16
+
+
+def test_C09_bulk_discount():
+    d = make()
+    d.receive("BOLT", 60, "A")
+    c = d.cash
+    d.ship("BOLT", 20, "A", 10)
+    assert d.cash == c + 180
+
+
+def test_C10_transfer():
+    d = make()
+    d.receive("BOLT", 10, "A")
+    d.transfer("BOLT", 4, "A", "B")
+    assert (d.stock("BOLT", "A"), d.stock("BOLT", "B")) == (6, 4)
+
+
+def test_C13_expiry():
+    d = make()
+    d.receive("GLUE", 2, "A")
+    for _ in range(8):
+        d.advance_day()
+    assert d.stock("GLUE") == 0
+
+
+def test_C14_reorder():
+    d = make()
+    d.receive("BOLT", 60, "A")
+    d.ship("BOLT", 15, "A", 16)
+    assert ("REORDER", "BOLT", "A") in d.notifications()
+
+
+def test_C16_C15_orders():
+    d = make()
+    o = d.place_order("S1", "BOLT", 1, 5)
+    d.deliver(o, 5)
+    assert d.reliability("S1") == 4
+
+
+def test_C25_stock_total():
+    d = make()
+    d.receive("BOLT", 3, "A")
+    d.receive("BOLT", 4, "B")
+    assert d.stock("BOLT") == 7
+
+
+def test_C26_report():
+    d = make()
+    d.receive("BOLT", 2, "A")
+    assert d.report() == [("BOLT", "A", 2, 24)]
+
+
+def test_C28_save_load():
+    d = make()
+    d.receive("BOLT", 2, "A")
+    s = d.save()
+    d.receive("BOLT", 2, "A")
+    d.load(s)
+    assert d.stock("BOLT") == 2
+
+
+def test_C29_sim_same_seed():
+    from sim import simulate
+    assert simulate(5, 1) == simulate(5, 1)
+
+
+def test_C31_constructor():
+    assert make().cash == 100_000

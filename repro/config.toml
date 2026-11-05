@@ -1,0 +1,9 @@
+# Run configuration. Prices and model ids live in providers/prices.toml (operator must fill).
+
+[run]
+agent_seeds = [0, 1, 2, 3, 4]
+# Implementer providers for live runs (names of sections in providers/prices.toml).
+implementers = ["anthropic"]
+# E3's independent reference (R_ind). The owner chose "same": the same provider in a fresh
+# conversation with no shared context. Set to a provider name to use a different one instead.
+r_ind_provider = "same"

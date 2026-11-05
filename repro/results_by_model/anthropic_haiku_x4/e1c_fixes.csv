@@ -1,0 +1,6 @@
+run,seed,n_comments,claimed_applied,verified_landed,claimed_but_not_landed,provenance,depends_on_responses,recording_set_manifest,status
+anthropic_haiku_x4/s0,0,8,8,0,8,LIVE,6,4b45e3499fea5de7,complete
+anthropic_haiku_x4/s1,1,8,0,0,0,LIVE,5,4b45e3499fea5de7,complete
+anthropic_haiku_x4/s2,2,8,6,0,6,LIVE,7,4b45e3499fea5de7,complete
+anthropic_haiku_x4/s3,3,2,1,0,1,LIVE,5,4b45e3499fea5de7,complete
+anthropic_haiku_x4/s4,4,8,0,0,0,LIVE,5,4b45e3499fea5de7,complete

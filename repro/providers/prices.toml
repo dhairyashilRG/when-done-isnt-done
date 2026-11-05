@@ -1,0 +1,47 @@
+# Prices and model ids for the live providers. Units: US dollars per million tokens.
+#
+# The harness refuses to start a live run while any provider it would use has `placeholder = true`.
+# `python -m repro estimate` works either way and says when prices are placeholders.
+
+# Upper-bound token estimate used by the hard budget cap before each call:
+# tokens <= ceil(utf8_bytes / chars_per_token_lower_bound). 2.0 is conservative for English and code.
+chars_per_token_lower_bound = 2.0
+
+[anthropic]
+# Anthropic list price, checked 2026-11-04. Thinking tokens bill as output tokens.
+placeholder = false
+model = "claude-sonnet-5-5"
+input_usd_per_mtok = 2.00          # Anthropic list price, checked 2026-11-04
+output_usd_per_mtok = 10.00        # Anthropic list price, checked 2026-11-04
+base_url = ""                      # empty: the SDK's default endpoint
+# The API key is read from the environment (ANTHROPIC_API_KEY) by the official SDK.
+
+[anthropic_haiku]
+# Second model (amendment A11): same API and request shape as [anthropic]; its own recordings and results.
+kind = "anthropic"
+placeholder = false
+model = "claude-haiku-5-5"
+input_usd_per_mtok = 0.10          # Anthropic list price for prompts of 100K tokens or fewer, checked 2026-11-05
+output_usd_per_mtok = 0.50         # (every prompt here is far below 100K; above it the price is 5x)
+base_url = ""
+
+[anthropic_haiku_x4]
+# Amendment A12: the same model with every output limit multiplied by 4. Under A11's limits, Haiku spent
+# its whole output allowance on thinking in most calls (53% of calls cut off), so that run failed.
+kind = "anthropic"
+placeholder = false
+model = "claude-haiku-5-5"
+max_tokens_scale = 4
+input_usd_per_mtok = 0.10          # Anthropic list price for prompts of 100K tokens or fewer, checked 2026-11-05
+output_usd_per_mtok = 0.50
+base_url = ""
+
+[openai_compat]
+# Optional second provider. OPERATOR MUST FILL every value below: they are PLACEHOLDERS.
+enabled = false
+placeholder = true                 # operator must fill, then set to false
+model = "OPERATOR-MUST-FILL"       # operator must fill: model id
+input_usd_per_mtok = 3.00          # placeholder - operator must fill
+output_usd_per_mtok = 15.00        # placeholder - operator must fill
+base_url = "OPERATOR-MUST-FILL"    # an OpenAI-compatible /v1 endpoint
+api_key_env = "OPENAI_COMPAT_API_KEY"

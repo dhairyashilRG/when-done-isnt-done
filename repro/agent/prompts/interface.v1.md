@@ -1,0 +1,8 @@
+- `inventory.py` defines `class Depot` and `class DepotError(Exception)`; a `DepotError` carries its code (a string such as `"CAPACITY"`) in `.code`. Other modules may hold helpers, but `Depot` and `DepotError` must be importable from `inventory`.
+- `Depot(warehouses, capacities, opening_cash, rounding_mode, ...)`: `warehouses` is a list of names, `capacities` a dict from warehouse name to units, `opening_cash` an int in cents. `rounding_mode` is one of the `decimal` module's rounding constants, for example `decimal.ROUND_HALF_EVEN`.
+- The constructor adds no items; callers add items with `add_item`, for example with the data table's values.
+- The methods named in the spec: `add_item`, `receive`, `ship`, `list_price`, `transfer`, `advance_day`, `notifications`, `place_order` (returns an order id), `deliver`, `reinstate`, `audit`, `return_goods`, `receive_bulk` (takes a list of `(sku, qty, wh)` tuples), `stock`, `report`, `undo`, `save`, `load`, `turnover`.
+- Read-only: `cash` (a property, int cents), `day` (a property, int; it starts at 0 and `advance_day()` adds 1), and `reliability(supplier) -> int`.
+- A supplier exists from its first `place_order`.
+- Each notification is a tuple: its type, then its arguments in the order the spec gives, for example `("REORDER", "BOLT", "A")`. `OVERDRAWN` is `("OVERDRAWN",)`.
+- `sim.py` defines `simulate(days, seed)`, which returns a list with one entry per day; each entry is a list of `(sku, qty)` orders.

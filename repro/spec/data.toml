@@ -1,0 +1,31 @@
+markup = 0.35
+bulk_threshold = 20
+bulk_discount_pct = 10
+storage_cents_per_unit_day = 2
+transfer_credit_cents_per_unit = 25      # planted: name and sign disagree with C11 ("cost the sending side")
+
+[items.BOLT]
+unit_cost = 12
+reorder_level = 50
+
+[items.GLUE]
+unit_cost = 240
+reorder_level = 5
+shelf_life_days = 7
+
+[items.FILM]
+unit_cost = 95
+reorder_level = 10
+shelf_life_days = 0   # planted: C13 says at least 1
+
+[demand.BOLT]
+min = 5
+max = 40
+
+[demand.GLUE]
+min = 0
+max = 6
+
+[demand.FILM]
+min = 1
+max = 12
